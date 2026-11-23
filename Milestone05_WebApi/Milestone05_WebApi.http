@@ -1,0 +1,6 @@
+@Milestone05_WebApi_HostAddress = http://localhost:5275
+
+GET {{Milestone05_WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

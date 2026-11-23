@@ -15,6 +15,8 @@ namespace Milestone01_BasicConsole
                 Console.WriteLine("\n--- Workout Tracker (Milestone 01) ---");
                 Console.WriteLine("1. Add Workout");
                 Console.WriteLine("2. List Workouts");
+                Console.WriteLine("3. Find Workout");
+                Console.WriteLine("4. Delete Workout");
                 Console.WriteLine("0. Exit");
                 Console.Write("Choose an option: ");
 
@@ -22,6 +24,8 @@ namespace Milestone01_BasicConsole
 
                 if (choice == "1") AddWorkout();
                 else if (choice == "2") ListWorkouts();
+                else if (choice == "3") FindWorkout();
+                else if (choice == "4") DeleteWorkout();
                 else if (choice == "0") running = false;
                 else Console.WriteLine("Invalid option.");
             }
@@ -59,6 +63,44 @@ namespace Milestone01_BasicConsole
             for (int i = 0; i < workouts.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {workouts[i]}");
+            }
+        }
+
+        static void FindWorkout()
+        {
+            Console.Write("Search keyword: ");
+            string keyword = (Console.ReadLine() ?? "").ToLower();
+            bool found = false;
+
+            for (int i = 0; i < workouts.Count; i++)
+            {
+                if (workouts[i].ToLower().Contains(keyword))
+                {
+                    Console.WriteLine($"{i + 1}. {workouts[i]}");
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine("No matching workout found.");
+            }
+        }
+
+        static void DeleteWorkout()
+        {
+            ListWorkouts();
+            if (workouts.Count == 0) return;
+
+            Console.Write("Enter number to delete: ");
+            if (int.TryParse(Console.ReadLine(), out int index) && index >= 1 && index <= workouts.Count)
+            {
+                workouts.RemoveAt(index - 1);
+                Console.WriteLine("Workout deleted.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid number.");
             }
         }
     }

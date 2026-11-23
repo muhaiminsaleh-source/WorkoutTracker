@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="../Milestone02_OOP/Milestone02_OOP.csproj" />
   <Project Path="../Milestone03_Layered/Milestone03_Layered.csproj" />
   <Project Path="../Milestone04_Database/Milestone04_Database.csproj" />

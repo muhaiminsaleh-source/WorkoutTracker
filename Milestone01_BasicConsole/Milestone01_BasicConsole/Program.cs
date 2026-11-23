@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
 namespace Milestone01_BasicConsole
 {
     internal class Program
     {
+        static string filePath = "workouts.json";
         static List<string> workouts = new List<string>();
 
         static void Main(string[] args)
         {
+            LoadWorkouts();
+
             bool running = true;
             while (running)
             {
@@ -49,6 +54,7 @@ namespace Milestone01_BasicConsole
 
             string record = $"{name} | {minutes} min | {group}";
             workouts.Add(record);
+            SaveWorkouts();
             Console.WriteLine("Workout added.");
         }
 
@@ -96,11 +102,27 @@ namespace Milestone01_BasicConsole
             if (int.TryParse(Console.ReadLine(), out int index) && index >= 1 && index <= workouts.Count)
             {
                 workouts.RemoveAt(index - 1);
+                SaveWorkouts();
                 Console.WriteLine("Workout deleted.");
             }
             else
             {
                 Console.WriteLine("Invalid number.");
+            }
+        }
+
+        static void SaveWorkouts()
+        {
+            string json = JsonSerializer.Serialize(workouts, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filePath, json);
+        }
+
+        static void LoadWorkouts()
+        {
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                workouts = JsonSerializer.Deserialize<List<string>>(json) ?? new List<string>();
             }
         }
     }
